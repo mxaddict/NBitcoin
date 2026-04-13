@@ -56,7 +56,7 @@ namespace NBitcoin.Altcoins
                     PowAllowMinDifficultyBlocks = true,
                     PowNoRetargeting = true,
                     CoinbaseMaturity = 100,
-                    ConsensusFactory = BitcoinConsensusFactory.Instance,
+                    ConsensusFactory = new ConsensusFactory(),
                     SupportSegwit = true,
                     SupportTaproot = true,
                 })
@@ -72,7 +72,7 @@ namespace NBitcoin.Altcoins
                 .SetRPCPort(33577)
                 .SetMaxP2PVersion(70016)
                 .SetName("nav-test")
-                .SetNetworkStringParser(new BitcoinStringParser())
+                .SetNetworkStringParser(new NetworkStringParser())
                 .SetGenesis("010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003f354fd6ad7ea5b0e978fae4693d22fda0cd3d8de25d60a1dc50ca40c507f86054bea52edd87ef7366fd103a66f263557736fd006f1a1942dc50ca40c507f20ffff001d0104404e592054696d65732030352f4f63742f32303139205374657665204e61766861695f746573746e657405ffffffff0100f2052a010000004341040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9ac00000000");
         }
 
@@ -90,7 +90,7 @@ namespace NBitcoin.Altcoins
                     PowAllowMinDifficultyBlocks = false,
                     PowNoRetargeting = false,
                     CoinbaseMaturity = 100,
-                    ConsensusFactory = BitcoinConsensusFactory.Instance,
+                    ConsensusFactory = new ConsensusFactory(),
                     SupportSegwit = true,
                     SupportTaproot = true,
                 })
@@ -106,7 +106,7 @@ namespace NBitcoin.Altcoins
                 .SetRPCPort(48484)
                 .SetMaxP2PVersion(70016)
                 .SetName("nav-main")
-                .SetNetworkStringParser(new BitcoinStringParser())
+                .SetNetworkStringParser(new NetworkStringParser())
                 .SetGenesis("00000000e563d370b42d83c98b811fb1bda076dd6c2b01dac9c1e21104c2527786d5c1c6e563d370b42d83c98b811fb1bda076dd6c2b01dac9c1e21104c252770000000000000000000000000000000000000000000000000000000000000000000020ffff001d0104404e592054696d65732030352f4f63742f32303139205374657665204e6176696f5f6d61696e657400ffffffff0100f2052a010000004341040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9ac00000000");
         }
 
@@ -115,7 +115,7 @@ namespace NBitcoin.Altcoins
             return new NetworkBuilder()
                 .SetConsensus(new Consensus()
                 {
-                    ConsensusFactory = BitcoinConsensusFactory.Instance,
+                    ConsensusFactory = new ConsensusFactory(),
                     SupportSegwit = true,
                     SupportTaproot = true,
                 })
