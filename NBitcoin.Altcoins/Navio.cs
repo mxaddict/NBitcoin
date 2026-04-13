@@ -1,7 +1,9 @@
 using NBitcoin;
 using NBitcoin.DataEncoders;
 using NBitcoin.Protocol;
+using NBitcoin.RPC;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NBitcoin.Altcoins
@@ -19,6 +21,25 @@ namespace NBitcoin.Altcoins
         {
             RegisterDefaultCookiePath("Navio",
                 new FolderName() { TestnetFolder = "testnet5" });
+        }
+
+        /// <summary>
+        /// Configures an RPCClient with BLSCT method name overrides for Navio.
+        /// Call this after creating an RPCClient connected to a Navio daemon.
+        /// </summary>
+        public static void ConfigureBLSCTOverrides(RPCClient client)
+        {
+            client.RPCMethodOverrides = new Dictionary<string, string>
+            {
+                { "getbalance",                   "getblsctbalance" },
+                { "sendtoaddress",                "sendtoblsctaddress" },
+                { "listunspent",                  "listblsctunspent" },
+                { "listtransactions",             "listblscttransactions" },
+                { "createrawtransaction",         "createblsctrawtransaction" },
+                { "fundrawtransaction",           "fundblsctrawtransaction" },
+                { "signrawtransactionwithwallet", "signblsctrawtransaction" },
+                { "decoderawtransaction",         "decodeblsctrawtransaction" },
+            };
         }
 
         protected override NetworkBuilder CreateTestnet()

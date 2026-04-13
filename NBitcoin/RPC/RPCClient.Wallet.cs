@@ -170,6 +170,8 @@ namespace NBitcoin.RPC
 				parameters.Add("descriptors", descriptors);
 			if (options?.LoadOnStartup is bool loadOnStartup)
 				parameters.Add("load_on_startup", loadOnStartup);
+			if (options?.Blsct is bool blsct)
+				parameters.Add("blsct", blsct);
 			var result = await SendCommandWithNamedArgsAsync(RPCOperations.createwallet.ToString(), parameters, cancellationToken).ConfigureAwait(false);
 			return SetWalletContext(result.Result.Value<string>("name"));
 		}

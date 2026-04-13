@@ -202,6 +202,14 @@ namespace NBitcoin.RPC
 		}
 
 		/// <summary>
+		/// Per-chain RPC method name overrides. When set, SendCommandAsync
+		/// will remap method names before sending to the daemon.
+		/// Example: {"getbalance": "getblsctbalance"} causes all getbalance
+		/// calls to be sent as getblsctbalance to the daemon.
+		/// </summary>
+		public Dictionary<string, string> RPCMethodOverrides { get; set; }
+
+		/// <summary>
 		/// Use default bitcoin parameters to configure a RPCClient.
 		/// </summary>
 		/// <param name="network">The network used by the node. Must not be null.</param>
@@ -658,6 +666,8 @@ namespace NBitcoin.RPC
 
 		public Task<RPCResponse> SendCommandWithNamedArgsAsync(string commandName, Dictionary<string, object> parameters, CancellationToken cancellationToken)
 		{
+			if (RPCMethodOverrides != null && RPCMethodOverrides.TryGetValue(commandName, out var remapped))
+				commandName = remapped;
 			return SendCommandAsync(new RPCRequest() { Method = commandName, NamedParams = parameters }, cancellationToken);
 		}
 
@@ -669,6 +679,8 @@ namespace NBitcoin.RPC
 
 		public Task<RPCResponse> SendCommandAsync(string commandName, CancellationToken cancellationToken, params object[] parameters)
 		{
+			if (RPCMethodOverrides != null && RPCMethodOverrides.TryGetValue(commandName, out var remapped))
+				commandName = remapped;
 			return SendCommandAsync(new RPCRequest(commandName, parameters), cancellationToken: cancellationToken);
 		}
 

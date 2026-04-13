@@ -10,6 +10,7 @@ namespace NBitcoin.RPC
 		public bool? AvoidReuse { get; set; }
 		public bool? Descriptors { get; set; }
 		public bool? LoadOnStartup { get; set; }
+		public bool? Blsct { get; set; }
 	}
 }
 

@@ -127,6 +127,23 @@ namespace NBitcoin.RPC
 		savemempool,
 		getblockfrompeer,
 		disconnectnode,
-		importdescriptors
+		importdescriptors,
+
+		// BLSCT wallet operations (Navio)
+		getblsctbalance,
+		sendtoblsctaddress,
+		listblsctunspent,
+		listblscttransactions,
+		createblsctrawtransaction,
+		fundblsctrawtransaction,
+		signblsctrawtransaction,
+		decodeblsctrawtransaction,
+		setblsctseed,
+		getblsctseed,
+		getblsctauditkey,
+		createblsctbalanceproof,
+		unlockblsctoutpoint,
+		getblsctrecoverydata,
+		generatetoblsctaddress
 	}
 }
