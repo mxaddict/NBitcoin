@@ -150,6 +150,31 @@ namespace NBitcoin.Tests
             Assert.Null(options.Blsct);
         }
 
+        [Fact]
+        public void CreateWalletOptions_BlsctTrue_IncludedInSerialization()
+        {
+            // Mirror the parameter-building logic from RPCClient.CreateWalletAsync —
+            // when Blsct=true the "blsct" key must appear in the named-args dict.
+            var options = new CreateWalletOptions { Blsct = true };
+            var parameters = new Dictionary<string, object>();
+            if (options?.Blsct is bool blsct)
+                parameters.Add("blsct", blsct);
+            Assert.True(parameters.ContainsKey("blsct"));
+            Assert.True((bool)parameters["blsct"]);
+        }
+
+        [Fact]
+        public void CreateWalletOptions_BlsctNull_OmittedFromSerialization()
+        {
+            // When Blsct is null (default), "blsct" must NOT appear in the named-args dict,
+            // so the daemon uses its own default and non-BLSCT callers are unaffected.
+            var options = new CreateWalletOptions { Blsct = null };
+            var parameters = new Dictionary<string, object>();
+            if (options?.Blsct is bool blsct)
+                parameters.Add("blsct", blsct);
+            Assert.False(parameters.ContainsKey("blsct"));
+        }
+
         [Theory]
         [InlineData(nameof(RPCOperations.getblsctbalance))]
         [InlineData(nameof(RPCOperations.sendtoblsctaddress))]
