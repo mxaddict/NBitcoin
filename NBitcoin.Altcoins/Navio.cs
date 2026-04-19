@@ -73,7 +73,12 @@ namespace NBitcoin.Altcoins
                 .SetMaxP2PVersion(70016)
                 .SetName("nav-test")
                 .SetNetworkStringParser(new NetworkStringParser())
-                .SetGenesis("010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003f354fd6ad7ea5b0e978fae4693d22fda0cd3d8de25d60a1dc50ca40c507f86054bea52edd87ef7366fd103a66f263557736fd006f1a1942dc50ca40c507f20ffff001d0104404e592054696d65732030352f4f63742f32303139205374657665204e61766861695f746573746e657405ffffffff0100f2052a010000004341040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9ac00000000");
+                // Synthetic parseable genesis: correct header (version=0x40000000, nTime=1743259590,
+                // nBits=0x207fffff, nNonce=2) with a minimal standard coinbase so NBitcoin can parse it.
+                // The hash (54dbe8e5...) differs from the real Navio genesis because the real genesis uses
+                // a BLSCT transaction that NBitcoin cannot parse. TODO: replace with real genesis bytes
+                // once a BLSCT-aware block parser is available.
+                .SetGenesis("000000400000000000000000000000000000000000000000000000000000000000000000a093517b295a26f56acbdd9e34da33b3e6fa6b9de7ef0d8288ee682ca249aa67c607e867ffff7f20020000000101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0100ffffffff0100f2052a01000000015100000000");
         }
 
         protected override NetworkBuilder CreateMainnet()
@@ -112,15 +117,8 @@ namespace NBitcoin.Altcoins
 
         protected override NetworkBuilder CreateRegtest()
         {
-            return new NetworkBuilder()
-                .SetConsensus(new Consensus()
-                {
-                    ConsensusFactory = new ConsensusFactory(),
-                    SupportSegwit = true,
-                    SupportTaproot = true,
-                })
-                .SetName("nav-reg")
-                .SetGenesis("01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffffffff001d0104404e592054696d65732030352f4f63746c5f7265677465737405ffffffff0100f2052a010000004341040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9ac00000000");
+            // Regtest has fBLSCT=false and is excluded from the Navio integration.
+            return null;
         }
     }
 }
