@@ -19,14 +19,21 @@ namespace NBitcoin.Tests
             Assert.NotNull(network);
         }
 
-        [Fact(Skip = "Navio testnet uses a BLSCT genesis block that NBitcoin cannot parse natively. " +
-            "The genesis bytes in Navio.cs are a synthetic parseable substitute. " +
-            "TODO: replace with real genesis bytes and re-enable once a BLSCT-aware block parser is available.")]
+        [Fact]
         public void NavioGenesisHashIsCorrect()
         {
             // navio-core src/kernel/chainparams.cpp, CTestNetParams genesis assert.
             var network = AltNetworkSets.Navio.Testnet;
             var expectedGenesisHash = uint256.Parse("7a04d0211de9194390c69ea0ab0d67e3c18a00c5a0b4aae65a4b5cd919e5c3e6");
+            Assert.Equal(expectedGenesisHash, network.GenesisHash);
+        }
+
+        [Fact]
+        public void NavioMainnetGenesisHashIsCorrect()
+        {
+            // navio-core src/kernel/chainparams.cpp, CMainParams genesis assert.
+            var network = AltNetworkSets.Navio.Mainnet;
+            var expectedGenesisHash = uint256.Parse("0af3c23ae1ac4910693b7187ac61641d16d1cf49cba7acf8649d48e831d86b13");
             Assert.Equal(expectedGenesisHash, network.GenesisHash);
         }
 
@@ -39,11 +46,28 @@ namespace NBitcoin.Tests
         }
 
         [Fact]
+        public void NavioMainnetPortsAreCorrect()
+        {
+            // navio-core CMainParams nDefaultPort, and CreateBaseChainParams for RPC.
+            var network = AltNetworkSets.Navio.Mainnet;
+            Assert.Equal(48470, network.DefaultPort);
+            Assert.Equal(48471, network.RPCPort);
+        }
+
+        [Fact]
         public void NavioTestnetMagicMatchesChainparams()
         {
             // navio-core CTestNetParams pchMessageStart = { 0x24, 0x67, 0xd2, 0xc1 }.
             var network = AltNetworkSets.Navio.Testnet;
             Assert.Equal(new byte[] { 0x24, 0x67, 0xd2, 0xc1 }, network.MagicBytes);
+        }
+
+        [Fact]
+        public void NavioMainnetMagicMatchesChainparams()
+        {
+            // navio-core CMainParams pchMessageStart = { 0xbd, 0x5f, 0xc3, 0x00 }.
+            var network = AltNetworkSets.Navio.Mainnet;
+            Assert.Equal(new byte[] { 0xbd, 0x5f, 0xc3, 0x00 }, network.MagicBytes);
         }
 
         [Fact]
