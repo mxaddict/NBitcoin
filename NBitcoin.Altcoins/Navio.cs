@@ -67,18 +67,19 @@ namespace NBitcoin.Altcoins
                 .SetBase58Bytes(Base58Type.EXT_SECRET_KEY, new byte[] { 0x04, 0x35, 0x83, 0x94 })
                 .SetBech32(Bech32Type.WITNESS_PUBKEY_ADDRESS, Encoders.Bech32("tb"))
                 .SetBech32(Bech32Type.WITNESS_SCRIPT_ADDRESS, Encoders.Bech32("tb"))
-                .SetMagic(0xdf0e3cb9)
-                .SetPort(33570)
-                .SetRPCPort(33577)
+                .SetMagic(0xc1d26724)
+                .SetPort(33670)
+                .SetRPCPort(33677)
                 .SetMaxP2PVersion(70016)
                 .SetName("nav-test")
                 .SetNetworkStringParser(new NetworkStringParser())
-                // Synthetic parseable genesis: correct header (version=0x40000000, nTime=1743259590,
-                // nBits=0x207fffff, nNonce=2) with a minimal standard coinbase so NBitcoin can parse it.
-                // The hash (54dbe8e5...) differs from the real Navio genesis because the real genesis uses
-                // a BLSCT transaction that NBitcoin cannot parse. TODO: replace with real genesis bytes
-                // once a BLSCT-aware block parser is available.
-                .SetGenesis("000000400000000000000000000000000000000000000000000000000000000000000000a093517b295a26f56acbdd9e34da33b3e6fa6b9de7ef0d8288ee682ca249aa67c607e867ffff7f20020000000101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0100ffffffff0100f2052a01000000015100000000");
+                // Synthetic parseable genesis: the real header fields from navio-core
+                // CTestNetParams (version, nTime, nBits, nNonce) carrying a minimal standard
+                // coinbase so NBitcoin can parse the block at all. Its hash therefore does NOT
+                // match the chain's real genesis, because the real one carries a BLSCT
+                // transaction NBitcoin has no parser for. TODO: replace with the real genesis
+                // bytes once a BLSCT-aware block parser exists.
+                .SetGenesis("000000400000000000000000000000000000000000000000000000000000000000000000a093517b295a26f56acbdd9e34da33b3e6fa6b9de7ef0d8288ee682ca249aa67d237f269ffff7f20000000000101000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0100ffffffff0100f2052a01000000015100000000");
         }
 
         protected override NetworkBuilder CreateMainnet()

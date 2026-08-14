@@ -24,8 +24,9 @@ namespace NBitcoin.Tests
             "TODO: replace with real genesis bytes and re-enable once a BLSCT-aware block parser is available.")]
         public void NavioGenesisHashIsCorrect()
         {
+            // navio-core src/kernel/chainparams.cpp, CTestNetParams genesis assert.
             var network = AltNetworkSets.Navio.Testnet;
-            var expectedGenesisHash = uint256.Parse("57b37639169f354fd61978f8e88db8d7da085c1c6ac4e625c5d018b0d9019e2b");
+            var expectedGenesisHash = uint256.Parse("7a04d0211de9194390c69ea0ab0d67e3c18a00c5a0b4aae65a4b5cd919e5c3e6");
             Assert.Equal(expectedGenesisHash, network.GenesisHash);
         }
 
@@ -33,8 +34,16 @@ namespace NBitcoin.Tests
         public void NavioNetworkPortsAreCorrect()
         {
             var network = AltNetworkSets.Navio.Testnet;
-            Assert.Equal(33570, network.DefaultPort);
-            Assert.Equal(33577, network.RPCPort);
+            Assert.Equal(33670, network.DefaultPort);
+            Assert.Equal(33677, network.RPCPort);
+        }
+
+        [Fact]
+        public void NavioTestnetMagicMatchesChainparams()
+        {
+            // navio-core CTestNetParams pchMessageStart = { 0x24, 0x67, 0xd2, 0xc1 }.
+            var network = AltNetworkSets.Navio.Testnet;
+            Assert.Equal(new byte[] { 0x24, 0x67, 0xd2, 0xc1 }, network.MagicBytes);
         }
 
         [Fact]
