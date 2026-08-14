@@ -22,9 +22,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\NBitcoin\NBitcoin.csproj" />
 	</ItemGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
-		<PackageReference Include="NavioBlsct" Version="0.1.0" />
-	</ItemGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'net8.0'">
     <DefineConstants>$(DefineConstants);HAS_SPAN</DefineConstants>
     <RemoveBC>true</RemoveBC>
